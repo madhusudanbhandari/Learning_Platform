@@ -1,9 +1,14 @@
+using System.Text;
+using System.Threading.RateLimiting;
 using lp.Application.Interface;
 using lp.Application.Service;
 using lp.Infrastructure;
 using lp.Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 var builder=WebApplication.CreateBuilder(args);
 
@@ -18,10 +23,92 @@ builder.Services.AddDbContext<LpDbConext>(options =>
     );
 });
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddPolicy("LoginPolicy", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString()
+                          ?? "unknown",
+
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0,
+                AutoReplenishment = true
+            }
+        )
+    );
+
+    options.OnRejected = async (context, cancellationToken) =>
+    {
+        if (context.Lease.TryGetMetadata(
+            MetadataName.RetryAfter, out var retryAfter))
+        {
+            context.HttpContext.Response.Headers.RetryAfter =
+                Math.Ceiling(retryAfter.TotalSeconds).ToString();
+        }
+
+        await context.HttpContext.Response.WriteAsync(
+            "Too many requests. Please try again later.",
+            cancellationToken
+        );
+    };
+});
+
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserService,UserService>();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer",new OpenApiSecurityScheme
+    {
+        Name="Authorization",
+        Type=SecuritySchemeType.Http,
+        Scheme="Bearer",
+        BearerFormat="JWT",
+        In=ParameterLocation.Header,
+        Description="Enter your token here"
+
+    });
+
+    options.AddSecurityRequirement(document=>new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecuritySchemeReference("Bearer",document),
+            new List<string>()
+        }
+    });
+});
+
+var key=builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Cant find the token");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters=new TokenValidationParameters
+    {
+        ValidateIssuer=true,
+        ValidateAudience=true,
+        ValidateIssuerSigningKey=true,
+        ValidateLifetime=true,
+
+        ValidAudience=builder.Configuration["Jwt:Audience"],
+        ValidIssuer=builder.Configuration["Jwt:Issuer"],
+
+        IssuerSigningKey=new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(key)
+        ),
+
+        ClockSkew=TimeSpan.Zero,
+
+    };
+});
 
 var app=builder.Build();
 
@@ -32,6 +119,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
 }
 
+app.UseRouting();
+app.UseRateLimiter();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
+
 
 app.Run();

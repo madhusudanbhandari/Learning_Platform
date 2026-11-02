@@ -133,3 +133,12 @@
 /Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/BCrypt-Net-Next.dll
 /Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/lp.Application.dll
 /Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/lp.Application.pdb
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.Bcl.Cryptography.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll

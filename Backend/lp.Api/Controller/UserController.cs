@@ -1,6 +1,7 @@
 using lp.Application.Dtos;
 using lp.Application.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace lp.Api.Controller;
 
@@ -21,7 +22,7 @@ public class UserController : ControllerBase
 
         return Ok(user);
     }
-
+    [EnableRateLimiting("LoginPolicy")]
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
