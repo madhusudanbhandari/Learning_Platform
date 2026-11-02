@@ -1,0 +1,16 @@
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/bin/Debug/net10.0/lp.Application.deps.json
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/bin/Debug/net10.0/lp.Application.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/bin/Debug/net10.0/lp.Application.pdb
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/bin/Debug/net10.0/lp.Domain.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/bin/Debug/net10.0/lp.Domain.pdb
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.csproj.AssemblyReference.cache
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.AssemblyInfoInputs.cache
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.AssemblyInfo.cs
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.csproj.CoreCompileInputs.cache
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.sourcelink.json
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Appli.D478F23A.Up2Date
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/refint/lp.Application.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/lp.Application.pdb
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/obj/Debug/net10.0/ref/lp.Application.dll

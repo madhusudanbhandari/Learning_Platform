@@ -1,0 +1,12 @@
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/bin/Debug/net10.0/lp.Domain.deps.json
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/bin/Debug/net10.0/lp.Domain.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/bin/Debug/net10.0/lp.Domain.pdb
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.AssemblyInfoInputs.cache
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.AssemblyInfo.cs
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.csproj.CoreCompileInputs.cache
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.sourcelink.json
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/refint/lp.Domain.dll
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/lp.Domain.pdb
+/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Domain/obj/Debug/net10.0/ref/lp.Domain.dll
