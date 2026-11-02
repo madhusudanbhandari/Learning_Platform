@@ -14,6 +14,10 @@ public class UserRepository : IUserRepository
     {
         return await  _context.Users.FirstOrDefaultAsync(u=>u.Email==email);
     }
+    public async Task<User?> GetUserById(int id)
+    {
+        return await  _context.Users.FirstOrDefaultAsync(u=>u.Id==id);
+    }
 
     public async Task AddUserAsync(User user)
     {
@@ -23,5 +27,12 @@ public class UserRepository : IUserRepository
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<User>> ViewPendingUsers()
+    {
+        return await _context.Users
+                            .Where(u=>u.Status==Domain.Entities.Enum.UserStatus.Pending)    
+                            .ToListAsync();
     }
 }

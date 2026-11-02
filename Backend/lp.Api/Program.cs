@@ -3,9 +3,9 @@ using System.Threading.RateLimiting;
 using lp.Application.Interface;
 using lp.Application.Service;
 using lp.Infrastructure;
+using lp.Infrastructure.Data;
 using lp.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -60,6 +60,7 @@ builder.Services.AddRateLimiter(options =>
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IAdminService,AdminService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -111,7 +112,13 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app=builder.Build();
+using(var scope = app.Services.CreateScope())
+{
+    var context=scope.ServiceProvider.GetRequiredService<LpDbConext>();
+    var configuration=scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
+    await AdminSeed.SeedAdminAsync(context,configuration);
+};
 
 if (app.Environment.IsDevelopment())
 {

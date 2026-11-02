@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using lp.Application.Dtos;
+using lp.Application.Exceptions;
 using lp.Application.Interface;
 using lp.Domain.Entities;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ public class UserService:IUserService
 
         if (existingUser != null)
         {
-            throw new Exception("User with that email already exits");
+            throw new BadRequestException("User with that email already exits");
         }
 
         var user=new User
@@ -58,12 +59,12 @@ public class UserService:IUserService
 
         if (user == null)
         {
-            throw new Exception("Cannot find the user");
+            throw new NotFoundException("Cannot find the user");
         }
 
         if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
         {
-            throw new Exception("Passwords didnot match");
+            throw new BadRequestException("Passwords didnot match");
         }
         
         return new CreateUserResponse
@@ -97,7 +98,7 @@ public class UserService:IUserService
         };
 
         var token=new JwtSecurityToken(
-            issuer:_configuration["Jwt:Isser"],
+            issuer:_configuration["Jwt:Issuer"],
             audience:_configuration["Jwt:Audience"],
             claims:claims,
             expires:DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryMinutes"])),
