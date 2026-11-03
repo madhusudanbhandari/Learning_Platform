@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace lp.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
-[Authorize]
+[Route("api/admin")]
+[Authorize(Roles ="Admin")]
 public class AdminController : ControllerBase
 {
     private readonly IAdminService _adminService;
@@ -17,8 +17,7 @@ public class AdminController : ControllerBase
         _adminService=adminService;
     }
 
-    [Authorize(Roles ="Admin")]
-    [HttpGet("Pending-users")]
+    [HttpGet("users/pending")]
     public async Task<IActionResult> ViewPendingUsers()
     {
         var users=await _adminService.ViewPendingUsers();
@@ -26,8 +25,7 @@ public class AdminController : ControllerBase
         return Ok(users);
     }
 
-    [Authorize(Roles ="Admin")]
-    [HttpPatch("verify-users")]
+    [HttpPatch("users/{id:int}/status")]
     public async Task<IActionResult> VerifyUsers(int id, VerifyUserDto dto)
     {
         var user=await _adminService.VerifyUserAsync(id,dto);

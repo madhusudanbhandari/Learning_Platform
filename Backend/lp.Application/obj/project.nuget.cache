@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "P7USNzMPnT0=",
+  "dgSpecHash": "/kONtrt8iJg=",
   "success": true,
   "projectFilePath": "/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Application/lp.Application.csproj",
   "expectedPackageFiles": [
     "/Users/madhusudanbhandari/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
+    "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation/12.2.0/fluentvalidation.12.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.bcl.cryptography/10.0.2/microsoft.bcl.cryptography.10.0.2.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.extensions.configuration.abstractions/10.0.14/microsoft.extensions.configuration.abstractions.10.0.14.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",

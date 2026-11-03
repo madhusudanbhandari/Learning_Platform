@@ -11,4 +11,8 @@ public class User
     public UserRole Role{get;set;}
     public UserStatus Status{get;set;}
 
+    public ICollection<Enrollment> Enrollments{get;set;}=new List<Enrollment>();
+
+
+
 }

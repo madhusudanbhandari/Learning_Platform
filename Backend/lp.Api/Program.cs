@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.RateLimiting;
 using lp.Application.Interface;
@@ -61,6 +62,12 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IAdminService,AdminService>();
+builder.Services.AddScoped<ICourseRepository,CourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+
+
 
 builder.Services.AddSwaggerGen(options =>
 {
