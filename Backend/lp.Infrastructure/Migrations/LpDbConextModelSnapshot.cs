@@ -30,6 +30,9 @@ namespace lp.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Duration")
                         .IsRequired()
                         .HasColumnType("text");
@@ -89,6 +92,39 @@ namespace lp.Infrastructure.Migrations
                     b.ToTable("Enrollments");
                 });
 
+            modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("PaidAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payment");
+                });
+
             modelBuilder.Entity("lp.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -144,9 +180,30 @@ namespace lp.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("lp.Domain.Entities.Course", "Course")
+                        .WithOne("Payment")
+                        .HasForeignKey("lp.Domain.Entities.Payment", "CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("lp.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("lp.Domain.Entities.Course", b =>
                 {
                     b.Navigation("Enrollments");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.User", b =>

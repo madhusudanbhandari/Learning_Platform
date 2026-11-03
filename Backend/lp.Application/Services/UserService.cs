@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using lp.Application.Dtos;
 using lp.Application.Exceptions;
 using lp.Application.Interface;
@@ -15,10 +16,12 @@ public class UserService:IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
-    public UserService(IUserRepository userRepository,IConfiguration configuration)
+    private readonly IMapper _mapper;
+    public UserService(IUserRepository userRepository,IConfiguration configuration,IMapper mapper)
     {
         _userRepository=userRepository;
         _configuration=configuration;
+        _mapper=mapper;
     }
 
     public async Task<CreateUserResponse> RegisterAsync(CreateUserRequest request)
@@ -42,14 +45,7 @@ public class UserService:IUserService
         await _userRepository.AddUserAsync(user);
         await _userRepository.SaveChangesAsync();
 
-        return new CreateUserResponse
-        {
-            Id=user.Id,
-            Name=user.Name,
-            Email=user.Email,
-            Status=user.Status,
-            Role=user.Role
-        };
+        return _mapper.Map<CreateUserResponse>(user);
 
     }
 

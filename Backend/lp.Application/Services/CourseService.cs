@@ -1,3 +1,4 @@
+using AutoMapper;
 using lp.Application.Dtos;
 using lp.Application.Exceptions;
 using lp.Application.Interface;
@@ -8,33 +9,30 @@ namespace lp.Application.Service;
 public class CourseService : ICourseService
 {
     private readonly ICourseRepository _courseRepository;
+    private readonly IMapper _mapper;
 
 
-    public CourseService(ICourseRepository courseRepository)
+    public CourseService(ICourseRepository courseRepository,IMapper mapper)
     {
         _courseRepository=courseRepository;
+        _mapper=mapper;
     }
 
-    public async Task<CourseResponseDto> CreateCourseAsync(CreateCourseDto dto)
+    public async Task<CourseResponseDto> CreateCourseAsync(int teacherId,CreateCourseDto dto)
     {
         var course=new Course
         {
             Title=dto.Title,
             Field=dto.Field,
             Duration=dto.Duration,
-            Price=dto.Price
+            Price=dto.Price,
+            CreatedBy=teacherId
         };
 
         await _courseRepository.AddCourseAsync(course);
         await _courseRepository.SaveChangesAsync();
 
-        return new CourseResponseDto
-        {
-            Id=course.Id,
-            Title=course.Title,
-            Field=course.Field,
-            Price=course.Price
-        };
+        return _mapper.Map<CourseResponseDto>(course);
     }
 
     public async Task<CourseResponseDto?> ViewCourseAsync(int id)
@@ -46,27 +44,13 @@ public class CourseService : ICourseService
             throw new NotFoundException("Cannot find the course");
         }
 
-        return new CourseResponseDto
-        {
-            Id=course.Id,
-            Title=course.Title,
-            Field=course.Field,
-            Price=course.Price,
-            Duration=course.Duration
-        };
+        return _mapper.Map<CourseResponseDto>(course);
     }
 
     public async Task<List<CourseResponseDto>> ViewAllCourses()
     {
         var courses=await _courseRepository.ViewAllCourses();
 
-        return courses.Select(course=> new CourseResponseDto
-        {
-           Id=course.Id,
-            Title=course.Title,
-            Field=course.Field,
-            Price=course.Price,
-            Duration=course.Duration
-        }).ToList();
+        return _mapper.Map<List<CourseResponseDto>>(courses);
     }
 }

@@ -31,7 +31,7 @@ public class EnrollmentController : ControllerBase
 
         var request=await _enrollmentService.RequestEnrollment(userId,dto);
 
-        return Ok(user);
+        return Ok(request);
     }
 
     [Authorize(Roles ="Teacher")]
@@ -45,7 +45,7 @@ public class EnrollmentController : ControllerBase
             return Unauthorized();
         }
 
-        var requests=await _enrollmentService.ViewEnrollRequests(courseId);
+        var requests=await _enrollmentService.ViewEnrollRequests(teacherId,courseId);
 
         return Ok(requests);
     }
@@ -54,7 +54,14 @@ public class EnrollmentController : ControllerBase
     [Authorize(Roles ="Teacher")]
     public async Task<IActionResult> VerifyRequest(int reqId,UpdateRequestDto dto)
     {
-        var request=await _enrollmentService.VerifyRequest(reqId,dto);
+        var user=User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if(!int.TryParse(user,out int teacherId))
+        {
+            return Unauthorized();
+        }
+
+        var request=await _enrollmentService.VerifyRequest(teacherId,reqId,dto);
 
         return Ok(request);
     }

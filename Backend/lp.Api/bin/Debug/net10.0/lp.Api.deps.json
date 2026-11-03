@@ -20,6 +20,17 @@
           "lp.Api.dll": {}
         }
       },
+      "AutoMapper/16.2.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.JsonWebTokens": "8.23.0"
+        },
+        "runtime": {
+          "lib/net10.0/AutoMapper.dll": {
+            "assemblyVersion": "16.0.0.0",
+            "fileVersion": "16.2.0.0"
+          }
+        }
+      },
       "BCrypt.Net-Next/4.2.0": {
         "runtime": {
           "lib/net10.0/BCrypt-Net-Next.dll": {
@@ -677,6 +688,7 @@
       },
       "lp.Application/1.0.0": {
         "dependencies": {
+          "AutoMapper": "16.2.0",
           "BCrypt.Net-Next": "4.2.0",
           "FluentValidation": "12.2.0",
           "System.IdentityModel.Tokens.Jwt": "8.23.0",
@@ -718,6 +730,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AutoMapper/16.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PE8HgPc5BZJnAFwjvDTE72gWL6YrYib+V7+vxtLXDYz0CH/fFgbVcwLUC9UHk5ALwspZ6Vbmoo6PHvseIk/0ZA==",
+      "path": "automapper/16.2.0",
+      "hashPath": "automapper.16.2.0.nupkg.sha512"
     },
     "BCrypt.Net-Next/4.2.0": {
       "type": "package",

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using lp.Application.Dtos;
 using lp.Application.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,13 @@ public class CourseController:ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDto dto)
     {
-        var course=await _courseService.CreateCourseAsync(dto);
+        var user=User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if(!int.TryParse(user,out int teacherId))
+        {
+            return Unauthorized();
+        }
+        var course=await _courseService.CreateCourseAsync(teacherId,dto);
 
         return Ok(course);
     }

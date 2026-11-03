@@ -1,7 +1,7 @@
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.RateLimiting;
 using lp.Application.Interface;
+using lp.Application.Mappings;
 using lp.Application.Service;
 using lp.Infrastructure;
 using lp.Infrastructure.Data;
@@ -68,7 +68,6 @@ builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 
 
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer",new OpenApiSecurityScheme
@@ -118,7 +117,13 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<MappingProfile>();
+});
+
 var app=builder.Build();
+
 using(var scope = app.Services.CreateScope())
 {
     var context=scope.ServiceProvider.GetRequiredService<LpDbConext>();

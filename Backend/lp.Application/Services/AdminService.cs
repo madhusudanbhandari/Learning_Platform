@@ -1,3 +1,4 @@
+using AutoMapper;
 using lp.Application.Dtos;
 using lp.Application.Exceptions;
 using lp.Application.Interface;
@@ -8,23 +9,18 @@ namespace lp.Application.Service;
 public class AdminService : IAdminService
 {
     private readonly IUserRepository _userRepository;
-    public AdminService(IUserRepository userRepository)
+    private readonly IMapper _mapper;
+    public AdminService(IUserRepository userRepository,IMapper mapper)
     {
         _userRepository=userRepository;
+        _mapper=mapper;
     }
 
     public async Task<List<ViewUserDto>> ViewPendingUsers()
     {
         var users= await _userRepository.ViewPendingUsers();
 
-        return users.Select(user=>new ViewUserDto
-        {
-            Id=user.Id,
-            Name=user.Name,
-            Email=user.Email,
-            Role=user.Role,
-            Status=user.Status
-        }).ToList();
+        return _mapper.Map<List<ViewUserDto>>(users);
 
     }
 
@@ -42,14 +38,7 @@ public class AdminService : IAdminService
 
         await _userRepository.SaveChangesAsync();
 
-        return new ViewUserDto
-        {
-            Id=user.Id,
-            Name=user.Name,
-            Email=user.Email,
-            Role=user.Role,
-            Status=user.Status
-        };
+        return _mapper.Map<ViewUserDto>(user);
 
     }
 

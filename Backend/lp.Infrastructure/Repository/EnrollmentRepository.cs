@@ -19,6 +19,12 @@ public class EnrollmentRepository : IEnrollmentRepository
                                 .Where(e=>e.Status==Domain.Entities.Enum.EnrollmentStatus.Pending && e.CourseId==courseId)
                                 .ToListAsync();
     }
+
+    public async Task<List<Enrollment>> GetStudentRequests(int id)
+    {
+        var requests=await _context.Enrollments.Where(e=>e.StudentId==id).ToListAsync();
+        return requests;
+    }
     public async Task<Enrollment?> GetEnrollmentRequestById(int id)
     {
         return await _context.Enrollments.FirstOrDefaultAsync(e=>e.Id==id);

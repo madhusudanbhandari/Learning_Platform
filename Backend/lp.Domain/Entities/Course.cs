@@ -7,8 +7,9 @@ public class Course
     public string Field{get;set;}=string.Empty;
     public decimal Price{get;set;}
     public string Duration{get;set;}=string.Empty;
-
+    public int CreatedBy{get;set;}
+    
+    public Payment? Payment{get;set;}
     public ICollection<Enrollment> Enrollments{get;set;}=new List<Enrollment>();
-
 
 }

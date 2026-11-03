@@ -5,7 +5,7 @@ namespace lp.Application.Interface;
 
 public interface ICourseService
 {
-    Task<CourseResponseDto> CreateCourseAsync(CreateCourseDto dto);
+    Task<CourseResponseDto> CreateCourseAsync(int teacherId,CreateCourseDto dto);
 
     Task<CourseResponseDto?> ViewCourseAsync(int id);
 
