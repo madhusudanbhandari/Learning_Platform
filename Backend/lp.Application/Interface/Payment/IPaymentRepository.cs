@@ -8,4 +8,6 @@ public interface IPaymentRepository
     Task<Payment?> GetLatestPaymentByEnrollId(int enrollId);
     Task AddPayment(Payment payment);
     Task SaveChangesAsync();
+
+    Task<Payment?> GetPaymentByPidx(string pidx);
 }

@@ -7,6 +7,6 @@ namespace lp.Application.Interface;
 
 public interface IPaymenetService
 {
-    Task<ViewPaymentDto>InitiatePayment(int studentId, int enrollId);
-    Task<Payment> ConfirmPayment(int paymentId, bool succcessfull, string? transactionId);
+    Task<InitiatePaymentResponseDto>InitiatePayment(int studentId, int enrollId);
+    Task<ViewPaymentDto> VerifyKhaltiPaymentAsync(string pidx);
 }

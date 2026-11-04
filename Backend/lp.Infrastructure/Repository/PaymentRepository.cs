@@ -34,4 +34,11 @@ public class PaymentRepository : IPaymentRepository
     {
          await _context.SaveChangesAsync();
     }
+
+    public async Task<Payment?> GetPaymentByPidx(string pidx)
+{
+    return await _context.Payments
+        .Include(p => p.Enrollment)
+        .FirstOrDefaultAsync(p => p.Pidx == pidx);
+}
 }

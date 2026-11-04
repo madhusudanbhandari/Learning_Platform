@@ -10,11 +10,11 @@ namespace lp.Api.Controller;
 [Route("api/[controller]")]
 public class PaymentController : ControllerBase
 {
-    private readonly IPaymenetService _paymenetService;
+    private readonly IPaymenetService _paymentService;
 
     public PaymentController(IPaymenetService paymenetService)
     {
-        _paymenetService=paymenetService;
+        _paymentService=paymenetService;
     }
 
     [Authorize(Roles ="Student")]
@@ -28,7 +28,7 @@ public class PaymentController : ControllerBase
             return Unauthorized();
         }
 
-        var payment=await _paymenetService.InitiatePayment(studentId,enrollId);
+        var payment=await _paymentService.InitiatePayment(studentId,enrollId);
 
         return Ok(payment);
     }
@@ -40,4 +40,19 @@ public class PaymentController : ControllerBase
 
     //     return Ok(confirm);
     // }
+
+    [AllowAnonymous]
+    [HttpGet("khalti/callback")]
+    public async Task<IActionResult> KhaltiCallback(
+        [FromQuery] string pidx)
+    {
+        if (string.IsNullOrWhiteSpace(pidx))
+        {
+            return BadRequest("Missing Khalti payment reference");
+        }
+
+        var result = await _paymentService.VerifyKhaltiPaymentAsync(pidx);
+
+        return Ok(result);
+    }
 }
