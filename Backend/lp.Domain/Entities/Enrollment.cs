@@ -13,4 +13,7 @@ public class Enrollment
     public decimal AmountPaid{get;set;}
     public DateTime CreatedAt{get;set;}
     public string Remark{get;set;}=string.Empty;
+
+    public ICollection<Payment> Payments{get;set;}=new List<Payment>();
+
 }

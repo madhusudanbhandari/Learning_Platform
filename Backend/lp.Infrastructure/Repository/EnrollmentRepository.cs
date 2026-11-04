@@ -17,6 +17,7 @@ public class EnrollmentRepository : IEnrollmentRepository
     {
         return await _context.Enrollments
                                 .Where(e=>e.Status==Domain.Entities.Enum.EnrollmentStatus.Pending && e.CourseId==courseId)
+                                .Include(e=>e.Payments)
                                 .ToListAsync();
     }
 
@@ -27,7 +28,12 @@ public class EnrollmentRepository : IEnrollmentRepository
     }
     public async Task<Enrollment?> GetEnrollmentRequestById(int id)
     {
-        return await _context.Enrollments.FirstOrDefaultAsync(e=>e.Id==id);
+        return await _context.Enrollments
+                                        .Where(e=>e.Id==id)
+                                        .Include(e=>e.Course)
+                                        .FirstOrDefaultAsync();
+                                        
+                                        
     }
    
     public async Task AddEnrollment(Enrollment enrollment)

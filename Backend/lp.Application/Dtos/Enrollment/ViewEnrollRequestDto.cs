@@ -1,3 +1,4 @@
+using lp.Domain.Entities;
 using lp.Domain.Entities.Enum;
 
 namespace lp.Application.Dtos;
@@ -11,4 +12,6 @@ public class ViewEnrollRequestDto
     public decimal AmountPaid{get;set;}
     public DateTime CreatedAt{get;set;}
     public string Remark{get;set;}=string.Empty;
+
+    public ViewPaymentDto? Payment{get;set;}
 }

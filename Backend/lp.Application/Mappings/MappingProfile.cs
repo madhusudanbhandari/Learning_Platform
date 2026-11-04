@@ -12,5 +12,6 @@ public class MappingProfile : Profile
         CreateMap<User,ViewUserDto>();
         CreateMap<Course, CourseResponseDto>();
         CreateMap<Enrollment,ViewEnrollRequestDto>();
+        
     }
 }

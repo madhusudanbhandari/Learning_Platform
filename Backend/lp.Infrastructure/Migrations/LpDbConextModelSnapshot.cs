@@ -50,9 +50,6 @@ namespace lp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.ToTable("Courses");
                 });
 
@@ -85,9 +82,9 @@ namespace lp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("CourseId", "StudentId");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Enrollments");
                 });
@@ -103,26 +100,26 @@ namespace lp.Infrastructure.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("PaidAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("EnrollId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId")
-                        .IsUnique();
+                    b.HasIndex("EnrollId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Payment");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.User", b =>
@@ -153,11 +150,6 @@ namespace lp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Id");
-
                     b.ToTable("Users");
                 });
 
@@ -182,28 +174,23 @@ namespace lp.Infrastructure.Migrations
 
             modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("lp.Domain.Entities.Course", "Course")
-                        .WithOne("Payment")
-                        .HasForeignKey("lp.Domain.Entities.Payment", "CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("lp.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany("Payments")
+                        .HasForeignKey("EnrollId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("lp.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("User");
+                    b.Navigation("Enrollment");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.Course", b =>
                 {
                     b.Navigation("Enrollments");
+                });
 
-                    b.Navigation("Payment");
+            modelBuilder.Entity("lp.Domain.Entities.Enrollment", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.User", b =>

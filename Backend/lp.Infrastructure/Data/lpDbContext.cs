@@ -15,6 +15,7 @@ public class LpDbConext : DbContext
 
     public DbSet<Course> Courses=>Set<Course>();
     public DbSet<Enrollment> Enrollments=>Set<Enrollment>();
+    public DbSet<Payment> Payments=>Set<Payment>();
 
 
 
@@ -35,21 +36,10 @@ public class LpDbConext : DbContext
                     .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Enrollment>()
-                    .HasIndex(e=>new {e.CourseId, e.StudentId});
-
-        modelBuilder.Entity<User>()
-                    .HasIndex(u=>u.Id);
-        
-        modelBuilder.Entity<User>() 
-                    .HasIndex(u=>u.Email)
-                    .IsUnique();
-        
-        modelBuilder.Entity<Course>()
-                    .HasIndex(c=>c.Id)
-                    .IsUnique();
-
-        modelBuilder.Entity<Enrollment>()
-                    .HasKey(e=>e.Id);
+                    .HasMany(e=>e.Payments)
+                    .WithOne(p=>p.Enrollment)
+                    .HasForeignKey(p=>p.EnrollId)
+                    .OnDelete(DeleteBehavior.Restrict);
         
 
     }

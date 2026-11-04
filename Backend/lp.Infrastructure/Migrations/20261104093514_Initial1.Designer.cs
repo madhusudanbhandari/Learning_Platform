@@ -12,8 +12,8 @@ using lp.Infrastructure;
 namespace lp.Infrastructure.Migrations
 {
     [DbContext(typeof(LpDbConext))]
-    [Migration("20261103062134_EnrollmentUpdate1")]
-    partial class EnrollmentUpdate1
+    [Migration("20261104093514_Initial1")]
+    partial class Initial1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace lp.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Duration")
                         .IsRequired()
                         .HasColumnType("text");
@@ -49,9 +52,6 @@ namespace lp.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
@@ -85,11 +85,44 @@ namespace lp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("CourseId", "StudentId");
-
                     b.ToTable("Enrollments");
+                });
+
+            modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EnrollId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.User", b =>
@@ -120,11 +153,6 @@ namespace lp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Id");
-
                     b.ToTable("Users");
                 });
 
@@ -147,9 +175,25 @@ namespace lp.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("lp.Domain.Entities.Enrollment", "Enrollment")
+                        .WithMany("Payments")
+                        .HasForeignKey("EnrollId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
+                });
+
             modelBuilder.Entity("lp.Domain.Entities.Course", b =>
                 {
                     b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("lp.Domain.Entities.Enrollment", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.User", b =>
