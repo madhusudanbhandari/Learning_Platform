@@ -14,4 +14,8 @@ public class Payment
     public DateTime CreatedAt{get;set;}
     public DateTime? PaidAt{get;set;}
     public PaymentStatus Status{get;set;}
+
+    public string? IdempotencyKey{get;set;}
+
+    public string? PaymentUrl{get;set;}
 }

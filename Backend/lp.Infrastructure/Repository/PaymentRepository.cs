@@ -17,6 +17,11 @@ public class PaymentRepository : IPaymentRepository
         return await _context.Payments.FirstOrDefaultAsync(p=>p.Id==id);
     }
 
+    public async Task<Payment?> GetPaymentByIdempotency(string key)
+    {
+        return await _context.Payments.FirstOrDefaultAsync(p=>p.IdempotencyKey==key);
+
+    }
     public async Task<Payment?> GetLatestPaymentByEnrollId(int enrollId)
     {
         return await _context.Payments

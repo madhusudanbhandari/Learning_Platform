@@ -26,8 +26,9 @@ public class PaymentService : IPaymenetService
         _khaltiOptions=options.Value;
     }
 
-    public async Task<InitiatePaymentResponseDto> InitiatePayment(int studentId, int enrollId)
+    public async Task<InitiatePaymentResponseDto> InitiatePayment(int studentId, int enrollId,string IdempotencyKey)
     {
+        
         var enrollment=await _enrollmentRepository.GetEnrollmentRequestById(enrollId);
 
         if (enrollment == null)
@@ -39,6 +40,33 @@ public class PaymentService : IPaymenetService
         {
             throw new UnauthorizedAccessException("You cannot initiate payment for others enrollments");
         }
+        var existingByKEy=await _paymentRepository.GetPaymentByIdempotency(IdempotencyKey);
+
+        if (existingByKEy != null)
+        {
+            if(existingByKEy.EnrollId!=enrollId ||
+             existingByKEy.Enrollment.StudentId != studentId)
+            {
+                throw new InvalidOperationException("This idempotency key has been already used by another request");
+            }
+
+            if(string.IsNullOrWhiteSpace(existingByKEy.Pidx) ||
+                string.IsNullOrWhiteSpace(existingByKEy .PaymentUrl))
+            {
+                throw new InvalidOperationException("This payment is already being processed try again later");
+            }
+
+            return new InitiatePaymentResponseDto
+                {
+                    PaymentId = existingByKEy.Id,
+                    Amount = existingByKEy.Amount,
+                    Pidx = existingByKEy.Pidx,
+                    PaymentUrl = existingByKEy.PaymentUrl
+                };
+
+
+        }
+
 
         var existingPayment=await _paymentRepository.GetLatestPaymentByEnrollId(enrollment.Id);
 
@@ -53,6 +81,9 @@ public class PaymentService : IPaymenetService
             {
                 throw new InvalidOperationException("Payment already completed");
             }
+
+
+            
         }
 
         var payment=new Payment
@@ -60,6 +91,7 @@ public class PaymentService : IPaymenetService
             EnrollId=enrollment.Id,
             Amount=enrollment.Course.Price,            
             CreatedAt=DateTime.UtcNow,
+            IdempotencyKey=IdempotencyKey,
             Status=Domain.Entities.Enum.PaymentStatus.Pending           
 
         };
@@ -68,7 +100,7 @@ public class PaymentService : IPaymenetService
         await _paymentRepository.SaveChangesAsync();
 
         try{
-            var amount=(long) enrollment.Course.Price;
+            var amount=checked((long) (enrollment.Course.Price*100m));
 
             var khaltiRequest=new KhaltiInitiateRequestDto
             {
@@ -88,6 +120,7 @@ public class PaymentService : IPaymenetService
             }
 
             payment.Pidx=khaltiResponse.Pidx;
+            payment.PaymentUrl=khaltiResponse.PaymentUrl;
             await _paymentRepository.SaveChangesAsync();
 
             return new InitiatePaymentResponseDto

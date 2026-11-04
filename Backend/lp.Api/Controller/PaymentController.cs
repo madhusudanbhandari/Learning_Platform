@@ -19,7 +19,9 @@ public class PaymentController : ControllerBase
 
     [Authorize(Roles ="Student")]
     [HttpPost("Initiate")]
-    public async Task<IActionResult> InitiatePayment(int enrollId)
+    public async Task<IActionResult> InitiatePayment(int enrollId,
+                                        [FromHeader(Name = "Idempotency-Key")]string idempotencyKey)
+
     {
         var student=User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -28,7 +30,12 @@ public class PaymentController : ControllerBase
             return Unauthorized();
         }
 
-        var payment=await _paymentService.InitiatePayment(studentId,enrollId);
+        if (string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            return BadRequest("Idempotency key is required");
+        }
+
+        var payment=await _paymentService.InitiatePayment(studentId,enrollId,idempotencyKey);
 
         return Ok(payment);
     }

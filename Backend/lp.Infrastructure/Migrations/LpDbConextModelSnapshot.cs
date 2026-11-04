@@ -106,8 +106,14 @@ namespace lp.Infrastructure.Migrations
                     b.Property<int>("EnrollId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("IdempotencyKey")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("PaidAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PaymentUrl")
+                        .HasColumnType("text");
 
                     b.Property<string>("Pidx")
                         .HasColumnType("text");
@@ -121,6 +127,9 @@ namespace lp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EnrollId");
+
+                    b.HasIndex("IdempotencyKey")
+                        .IsUnique();
 
                     b.ToTable("Payments");
                 });

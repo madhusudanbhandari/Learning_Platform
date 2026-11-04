@@ -40,6 +40,10 @@ public class LpDbConext : DbContext
                     .WithOne(p=>p.Enrollment)
                     .HasForeignKey(p=>p.EnrollId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Payment>()
+                    .HasIndex(p=>p.IdempotencyKey)
+                    .IsUnique();
         
 
     }
