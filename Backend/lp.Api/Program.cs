@@ -70,6 +70,9 @@ builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymenetService, PaymentService>();
+builder.Services.AddScoped<ILessonRepository,LessonRepository>();
+builder.Services.AddScoped<ILessonService,LessonService>();
+
 
 builder.Services.Configure<KhaltiOptions>(builder.Configuration.GetSection("Khalti"));
 

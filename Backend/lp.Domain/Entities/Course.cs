@@ -9,5 +9,6 @@ public class Course
     public string Duration{get;set;}=string.Empty;
     public int CreatedBy{get;set;}
     public ICollection<Enrollment> Enrollments{get;set;}=new List<Enrollment>();
+    public ICollection<Lesson> Lessons{get;set;}=new List<Lesson>();
 
 }

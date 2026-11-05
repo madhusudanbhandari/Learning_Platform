@@ -89,6 +89,32 @@ namespace lp.Infrastructure.Migrations
                     b.ToTable("Enrollments");
                 });
 
+            modelBuilder.Entity("lp.Domain.Entities.Lesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VideoUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Lessons");
+                });
+
             modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
@@ -184,6 +210,17 @@ namespace lp.Infrastructure.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("lp.Domain.Entities.Lesson", b =>
+                {
+                    b.HasOne("lp.Domain.Entities.Course", "Course")
+                        .WithMany("Lessons")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("lp.Domain.Entities.Payment", b =>
                 {
                     b.HasOne("lp.Domain.Entities.Enrollment", "Enrollment")
@@ -198,6 +235,8 @@ namespace lp.Infrastructure.Migrations
             modelBuilder.Entity("lp.Domain.Entities.Course", b =>
                 {
                     b.Navigation("Enrollments");
+
+                    b.Navigation("Lessons");
                 });
 
             modelBuilder.Entity("lp.Domain.Entities.Enrollment", b =>

@@ -17,6 +17,8 @@ public class LpDbConext : DbContext
     public DbSet<Enrollment> Enrollments=>Set<Enrollment>();
     public DbSet<Payment> Payments=>Set<Payment>();
 
+    public DbSet<Lesson> Lessons=>Set<Lesson>();
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,6 +46,12 @@ public class LpDbConext : DbContext
         modelBuilder.Entity<Payment>()
                     .HasIndex(p=>p.IdempotencyKey)
                     .IsUnique();
+
+        modelBuilder.Entity<Lesson>()
+                    .HasOne(l=>l.Course)
+                    .WithMany(c=>c.Lessons)
+                    .HasForeignKey(l=>l.CourseId)
+                    .OnDelete(DeleteBehavior.Cascade);
         
 
     }

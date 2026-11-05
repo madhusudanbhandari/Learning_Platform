@@ -33,7 +33,7 @@ public class CourseController:ControllerBase
         return Ok(course);
     }
 
-    [Authorize(Roles ="Teacher")]
+    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> ViewCourse(int id)
     {
@@ -42,7 +42,7 @@ public class CourseController:ControllerBase
         return Ok(course);
     }
 
-    [Authorize(Roles ="Teacher")]
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> ViewAllCourses()
     {
