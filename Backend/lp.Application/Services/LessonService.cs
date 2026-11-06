@@ -29,14 +29,13 @@ public class LessonService : ILessonService
 
         if (courseTeacher != teacherId)
         {
-            throw new BadRequestException("You cannot create lesson for others course");
+            throw new ForbiddenException("You cannot create lesson for others course");
         }
 
         var lesson=new Lesson
         {
             CourseId=createLesson.CourseId,
             Title=createLesson.Title,
-            VideoUrl=createLesson.VideoUrl,
             
         };
 
@@ -48,7 +47,6 @@ public class LessonService : ILessonService
             Id=lesson.Id,
             CourseId=lesson.CourseId,
             Title=lesson.Title,
-            VideoUrl=lesson.VideoUrl
         };
     }
 
@@ -67,12 +65,17 @@ public class LessonService : ILessonService
             Id=lesson.Id,
             CourseId=lesson.CourseId,
             Title=lesson.Title,
-            VideoUrl=lesson.VideoUrl
         };
     }
 
     public async Task<List<ViewLessonDdto>> GetAllLessonsByCourse(int courseId)
     {
+        var course=await _courseRepository.ViewCourseById(courseId);
+
+        if (course == null)
+        {
+            throw new NotFoundException("cannot find the course");
+        }
         var lessons=await _lessonRepository.GetLessonByCourse(courseId);
 
         return lessons.Select(lesson=>new ViewLessonDdto
@@ -80,7 +83,6 @@ public class LessonService : ILessonService
             Id=lesson.Id,
             CourseId=lesson.CourseId,
             Title=lesson.Title,
-            VideoUrl=lesson.VideoUrl
         }).ToList();
     }
 

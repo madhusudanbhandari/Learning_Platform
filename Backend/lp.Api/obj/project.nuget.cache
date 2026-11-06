@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "43WTbA0Fkbc=",
+  "dgSpecHash": "vjWKM72ndj0=",
   "success": true,
   "projectFilePath": "/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Api/lp.Api.csproj",
   "expectedPackageFiles": [
     "/Users/madhusudanbhandari/.nuget/packages/automapper/16.2.0/automapper.16.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation/12.2.0/fluentvalidation.12.2.0.nupkg.sha512",
+    "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.2.0/fluentvalidation.dependencyinjectionextensions.12.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/10.0.14/microsoft.aspnetcore.authentication.jwtbearer.10.0.14.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.aspnetcore.openapi/10.0.12/microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",

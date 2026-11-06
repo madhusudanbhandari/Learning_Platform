@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "BeeFkDuMMms=",
+  "dgSpecHash": "IqG06PvM7X8=",
   "success": true,
   "projectFilePath": "/Users/madhusudanbhandari/Desktop/Learn/Learning_Platform/Backend/lp.Infrastructure/lp.Infrastructure.csproj",
   "expectedPackageFiles": [
     "/Users/madhusudanbhandari/.nuget/packages/automapper/16.2.0/automapper.16.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation/12.2.0/fluentvalidation.12.2.0.nupkg.sha512",
+    "/Users/madhusudanbhandari/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.2.0/fluentvalidation.dependencyinjectionextensions.12.2.0.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.bcl.cryptography/10.0.2/microsoft.bcl.cryptography.10.0.2.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.entityframeworkcore/10.0.4/microsoft.entityframeworkcore.10.0.4.nupkg.sha512",
     "/Users/madhusudanbhandari/.nuget/packages/microsoft.entityframeworkcore.abstractions/10.0.4/microsoft.entityframeworkcore.abstractions.10.0.4.nupkg.sha512",

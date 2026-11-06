@@ -1,9 +1,11 @@
 using System.Text;
 using System.Threading.RateLimiting;
+using FluentValidation;
 using lp.Application.Interface;
 using lp.Application.Mappings;
 using lp.Application.Options;
 using lp.Application.Service;
+using lp.Application.Validators;
 using lp.Infrastructure;
 using lp.Infrastructure.Data;
 using lp.Infrastructure.PaymentGateway;
@@ -78,6 +80,8 @@ builder.Services.Configure<KhaltiOptions>(builder.Configuration.GetSection("Khal
 
 builder.Services.AddHttpClient<IPaymentGateway, KhaltiPaymentGateway>();
 
+
+builder.Services.AddValidatorsFromAssemblyContaining<CourseValidator>();
 
 builder.Services.AddSwaggerGen(options =>
 {

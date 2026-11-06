@@ -22,7 +22,6 @@ public class LessonRepository:ILessonRepository
     {
         return await _context.Lessons
                                 .Where(l=>l.CourseId==id)
-                                .Include(l=>l.Course)
                                 .ToListAsync();
 
     }

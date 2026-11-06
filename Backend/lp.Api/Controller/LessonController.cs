@@ -35,7 +35,7 @@ public class LessonController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("Id")]
+    [HttpGet("{Id:int}")]
     public async Task<IActionResult> GetLesson(int lesson)
     {
         
